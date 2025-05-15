@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package delivery;
+
+service DeliveryService {
+  rpc GetDeliveryStatus (DeliveryRequest) returns (DeliveryStatus);
+  rpc UpdateDeliveryStatus (UpdateDeliveryRequest) returns (DeliveryStatus); // Add this
+}
+
+message DeliveryRequest {
+  string orderId = 1;
+}
+
+message DeliveryStatus {
+  string orderId = 1;
+  string status = 2;
+  string updatedAt = 3;
+}
+message UpdateDeliveryRequest {
+  string orderId = 1;
+  string status = 2;
+}

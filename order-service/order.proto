@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package order;
+message Empty {}
+
+message OrderList {
+  repeated OrderResponse orders = 1;
+}
+service OrderService {
+  rpc CreateOrder (OrderInput) returns (OrderResponse);
+  rpc GetOrderStatus (OrderRequest) returns (OrderStatus);
+  rpc GetOrderById (OrderRequest) returns (OrderResponse);
+  rpc GetAllOrders (Empty) returns (OrderList);
+}
+
+
+message OrderInput {
+  string customerName = 1;
+  repeated string itemIds = 2;
+}
+
+message OrderResponse {
+  string orderId = 1;
+  string message = 2;
+}
+
+message OrderRequest {
+  string orderId = 1;
+}
+
+message OrderStatus {
+  string orderId = 1;
+  string status = 2;
+}
+// The OrderService allows clients to create orders and check the status of existing orders.

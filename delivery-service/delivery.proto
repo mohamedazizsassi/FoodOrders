@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package delivery;
+
+service DeliveryService {
+  rpc GetDeliveryStatus (DeliveryRequest) returns (DeliveryStatus);
+  rpc UpdateDeliveryStatus (DeliveryUpdateRequest) returns (DeliveryStatus);
+}
+
+message DeliveryRequest {
+  string orderId = 1;
+}
+
+message DeliveryUpdateRequest { // ✅ ADD THIS
+  string orderId = 1;
+  string status = 2;
+}
+
+message DeliveryStatus {
+  string orderId = 1;
+  string status = 2;
+  string updatedAt = 3;
+}
+// The DeliveryService provides a method to retrieve the delivery status of an order using its order ID.
+// The GetDeliveryStatus method returns the current status of the delivery, including the order ID, status, and last updated timestamp.

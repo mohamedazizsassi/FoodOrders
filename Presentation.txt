@@ -1,0 +1,68 @@
+1. Introduction
+    Contexte :
+        Développement d’une plateforme microservices pour gérer un système de commande et livraison de repas.
+
+2. Choix d’architecture
+    Architecture Microservices :
+
+        Chaque service est indépendant : Menu, Commande, Livraison, API Gateway.
+
+        Permet de déployer, scaler et maintenir chaque service séparément.
+
+    Communication inter-services :
+
+        Utilisation de gRPC pour échanges rapides et typés entre services.
+
+        Infrastructure Kafka/Zookeeper :
+
+            Gestion des événements asynchrones (ex: suivi commande).
+
+    API Gateway (GraphQL + Express) :
+
+        Point d’entrée unique pour le client, orchestration des appels aux microservices.
+
+        GraphQL/Rest pour requêtes flexibles côté client.
+
+3. Fonctionnalités implémentées
+    Menu-Service :
+
+        Consultation des menus et items disponibles.
+
+    Order-Service :
+
+    Création et gestion des commandes.
+
+        Suivi du statut des commandes.
+
+    Delivery-Service :
+
+        Mise à jour et consultation du statut de livraison.
+
+    API Gateway :
+
+    Résolution des requêtes GraphQL/REST en appelant les microservices.
+    
+        Food Delivery API (Collection)
+            ├── REST Endpoints
+            │   ├── GET /menu/items
+            │   ├── GET /menu/items/:id
+            │   ├── POST /orders
+            │   ├── GET /orders/:orderId
+            │   ├── GET /delivery/status/:orderId
+            │   └── PUT /delivery/status/:orderId
+            └── GraphQL
+                ├── Get Menu Items
+                ├── Create Order
+                └── Get Delivery Status
+
+
+    Infrastructure Kafka/Zookeeper :
+
+        Assure la fiabilité et la scalabilité des échanges asynchrones.
+
+4. Défis rencontrés
+    Gestion des communications gRPC entre conteneurs Docker :
+        Résolution des noms de services dans le réseau Docker, configuration des adresses.
+    Dockerisation et orchestration des services :
+        Configuration des réseaux Docker, ports, dépendances, et volumes.
+    Mise à jour des statuts de livraison en temps réel.

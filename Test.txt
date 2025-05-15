@@ -1,0 +1,43 @@
+query {
+  getMenuItems {
+    id
+    name
+    description
+    price
+  }
+}
+
+
+query {
+  getMenuItemById(id: "1") {
+    name
+    description
+  }
+}
+
+
+mutation {
+  createOrder(items: ["1", "2"]) {
+    orderId
+    status
+  }
+}
+
+query {
+  getDeliveryStatus(orderId: "1") {
+    orderId
+    status
+    updatedAt
+  }
+}
+
+
+
+mutation {
+  updateDeliveryStatus(orderId: "1", status: "delivered") {
+    orderId
+    status
+    updatedAt
+  }
+}
+

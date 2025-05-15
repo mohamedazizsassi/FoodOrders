@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package menu;
+
+service MenuService {
+  rpc GetMenuItems (Empty) returns (MenuItemList);
+  rpc GetMenuItemById (MenuItemRequest) returns (MenuItem);
+}
+
+message Empty {}
+
+message MenuItemRequest {
+  string id = 1;
+}
+
+message MenuItem {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  double price = 4;
+}
+
+message MenuItemList {
+  repeated MenuItem items = 1;
+}
+// The MenuService provides methods to retrieve menu items and their details.
+// The GetMenuItems method returns a list of all menu items, while the GetMenuItemById method retrieves details for a specific item by its ID.

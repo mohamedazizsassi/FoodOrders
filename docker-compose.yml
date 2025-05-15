@@ -1,0 +1,59 @@
+
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    networks:
+      - foodorderz-net
+
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    depends_on:
+      - zookeeper
+    networks:
+      - foodorderz-net
+
+  menu-service:
+    build: ./menu-service
+    ports:
+      - "50051:50051"
+    networks:
+      - foodorderz-net
+
+  order-service:
+    build: ./order-service
+    ports:
+      - "50052:50052"
+    networks:
+      - foodorderz-net
+
+  delivery-service:
+    build: ./delivery-service
+    ports:
+      - "50053:50053"
+    networks:
+      - foodorderz-net
+
+  api-gateway:
+    build: ./api-gateway
+    ports:
+      - "4000:4000"
+    depends_on:
+      - menu-service
+      - order-service
+      - delivery-service
+    networks:
+      - foodorderz-net
+
+networks:
+  foodorderz-net:
+    driver: bridge
